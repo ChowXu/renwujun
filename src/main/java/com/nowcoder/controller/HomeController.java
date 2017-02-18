@@ -1,7 +1,9 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.model.EntityType;
 import com.nowcoder.model.Question;
 import com.nowcoder.model.ViewObject;
+import com.nowcoder.service.FollowService;
 import com.nowcoder.service.QuestionService;
 import com.nowcoder.service.UserService;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,9 @@ public class HomeController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    FollowService followService;
+
     private List<ViewObject> getQuestions(int userId, int offset, int limit) {
         List<Question> questionList = questionService.getLatestQuestions(userId, offset, limit);
         List<ViewObject> vos = new ArrayList<>();
@@ -37,6 +43,7 @@ public class HomeController {
             ViewObject vo = new ViewObject();
             vo.set("question", question);
             vo.set("user", userService.getUser(question.getUserId()));
+            vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
             vos.add(vo);
         }
         return vos;

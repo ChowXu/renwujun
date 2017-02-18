@@ -2,6 +2,7 @@ package com.nowcoder.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.databind.util.ObjectBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,17 @@ public class WendaUtil {
         return json.toJSONString();
 
     }
+
+    public static String getJSONString(int code, Map<String, Object> obj) {
+        JSONObject json = new JSONObject();
+        json.put("code", code);
+        for (Map.Entry<String, Object> entry : obj.entrySet()) {
+            json.put(entry.getKey(), entry.getValue());
+        }
+        return json.toJSONString();
+
+    }
+
 
     public static String getJSONString(int code) {
         JSONObject json = new JSONObject();

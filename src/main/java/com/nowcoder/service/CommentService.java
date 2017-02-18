@@ -41,4 +41,7 @@ public class CommentService {
         return commentDao.updateCommentStatus(1, EntityId) > 0;
     }
 
+    public int getUserCommentCount(int uid) {
+        return commentDao.getUserCommentCount(uid);
+    }
 }
